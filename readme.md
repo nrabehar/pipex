@@ -41,7 +41,7 @@ you can execute the pipex program like this
 ```sh
 git clone git@github.com:nrabehar/pipex.git
 ```
-the `make` to compile the project
+just `make` to compile the project and test
 ```sh
 make
 ```
