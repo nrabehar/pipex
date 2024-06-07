@@ -1,6 +1,6 @@
 # PIPEX
 
-This project is the discovery in detail and by programming  a ___UNIX___ mecanism that you alredy know.
+This project is the discovery in detail and by programming  a ___UNIX___ mecanism that you already know.
 
 
 ### Pipex progam
