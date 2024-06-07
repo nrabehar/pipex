@@ -6,17 +6,15 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:05:50 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/05 16:56:59 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:01:14 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_throw(char const *title, char *m, int sy, char const *pt)
+void	ft_throw(char const *title, char *m, char const *pt)
 {
-	ft_printf_fd(STDERR_FILENO, RED "%s: " RESET, title);
-	if (sy)
-		perror("");
+	ft_printf_fd(STDERR_FILENO, RED "%s%s: ", title, RESET);
 	if (m && !pt)
 		ft_printf_fd(STDERR_FILENO, "%s\n", m);
 	else if (m && pt)
@@ -48,14 +46,14 @@ void	ft_get_pths(t_pipex *dt)
 	{
 		close(dt->inpf);
 		close(dt->inpf);
-		ft_throw("Path", "Failed to get evironement path", 0, NULL);
+		ft_throw("Path", "Failed to get evironement path", NULL);
 	}
 	dt->pths = ft_split(*epc + 5, ':');
 	if (!dt->pths)
 	{
 		close(dt->inpf);
 		close(dt->inpf);
-		ft_throw("Path", "Failed to get evironement path", 0, NULL);
+		ft_throw("Path", "Failed to get evironement path", NULL);
 	}
 }
 
@@ -91,19 +89,18 @@ void	ft_create_hd(char const *delimiter)
 
 	fd = open("here_doc", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		ft_throw("Unable to create here_doc file", 0, 1, NULL);
+		ft_throw("Here_doc", strerror(errno), "here_doc");
 	while (1)
 	{
-		write(STDOUT_FILENO, "heredoc>> ", 10);
+		ft_printf_fd(STDOUT_FILENO, "pipex heredoc> ");
 		line = ft_gnl(STDIN_FILENO);
 		if (!line || (line && ft_strncmp(line, delimiter,
 					ft_strlen(delimiter)) == 0))
 			break ;
-		if (write(fd, line, ft_strlen(line)) < 0)
-			handle_write_error(line, fd);
+		ft_printf_fd(fd, line);
 		free(line);
 	}
 	free(line);
 	if (close(fd) < 0)
-		ft_throw("Unable to close here_doc temp file", 0, 1, NULL);
+		ft_throw("Here_doc", strerror(errno), "here_doc");
 }

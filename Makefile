@@ -6,6 +6,7 @@ INCS_DIR  = inc
 
 # build
 NAME = pipex
+BNAME = .pipex_bonus
 LIBPIPEX = libpipex.a
 LIBFT = $(LIBFT_DIR)/libft.a
 
@@ -36,8 +37,13 @@ $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(CLINKS)
 
 $(NAME) : $(PM_OBJ) $(LIBPIPEX)
-	rm -f $(PB_OBJ)
 	$(CC) $(CFLAGS) $(OBJS) $(PM_OBJ) -o $(NAME) -L. -lpipex $(CLINKS)
+	rm -f $(BNAME)
+
+$(BNAME) : $(PB_OBJ) $(LIBPIPEX)
+	$(CC) $(CFLAGS) $(OBJS) $(PB_OBJ) -o $(NAME) -L. -lpipex $(CLINKS)
+	touch $(BNAME)
+	rm -f $(PM_OBJ)
 
 $(LIBPIPEX) : $(LIBFT) $(OBJS)
 	@ar -rcs $(LIBPIPEX) $(OBJS)
@@ -58,18 +64,16 @@ leak : $(NAME)
 
 all : $(NAME)
 
-bonus : $(PB_OBJ) $(LIBPIPEX)
-	rm -f $(PM_OBJ)
-	$(CC) $(CFLAGS) $(OBJS) $(PB_OBJ) -o $(NAME) -L. -lpipex $(CLINKS)
+bonus : $(BNAME)
 
 clean :
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(PM_OBJ) $(PB_OBJ)
 	@rm -rf $(OBJS_DIR)
 
 fclean : clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
-	rm -f $(LIBPIPEX) $(NAME)
+	rm -f $(LIBPIPEX) $(NAME) $(BNAME)
 
 re : fclean all
 
