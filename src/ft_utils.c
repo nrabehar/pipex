@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:05:50 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/06 13:01:14 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/10 09:16:44 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	ft_free_pths(char **pths)
 	}
 	free(pths);
 }
-
+/**
+ * @brief Retrieves the PATH environment variable and splits it into paths.
+ * @param dt A pointer to the t_pipex structure.
+ */
 void	ft_get_pths(t_pipex *dt)
 {
 	char	**epc;
@@ -57,6 +60,12 @@ void	ft_get_pths(t_pipex *dt)
 	}
 }
 
+/**
+ * @brief Gets the full path of a command.
+ * @param cmd The command name.
+ * @param pths An array of paths.
+ * @return The full path of the command, or NULL if not found.
+ */
 char	*ft_get_cmd_pth(char *cmd, char **pths)
 {
 	char	*tmp;
@@ -82,6 +91,10 @@ char	*ft_get_cmd_pth(char *cmd, char **pths)
 	return (NULL);
 }
 
+/**
+ * @brief Creates a here_doc file and writes input until a delimiter is reached.
+ * @param delimiter The delimiter string.
+ */
 void	ft_create_hd(char const *delimiter)
 {
 	int		fd;

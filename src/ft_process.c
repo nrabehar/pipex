@@ -6,12 +6,24 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:27:22 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/06 13:00:14 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/10 09:22:26 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/**
+ * @brief Executes a command.
+ *
+ * This function attempts to execute the specified command using the given path,
+ * arguments, and environment variables. If the execution fails, it handles the
+ * error and exits with the appropriate status.
+ *
+ * @param pt Path to the executable.
+ * @param ca Command arguments array.
+ * @param nf Flag indicating if the command was not found.
+ * @param ep Environment variables array.
+ */
 static void	ft_exec_cmd(char *pt, char **ca, int nf, char **ep)
 {
 	size_t	errn;
@@ -34,6 +46,16 @@ static void	ft_exec_cmd(char *pt, char **ca, int nf, char **ep)
 	}
 }
 
+/**
+ * @brief Reads and processes input commands.
+ *
+ * This function handles the input redirection,
+	splits the command into arguments,
+ * and attempts to execute it. If the command is not found, it searches for the
+ * command in the provided paths.
+ *
+ * @param dt A pointer to the t_pipex structure.
+ */
 static void	ft_read_process(t_pipex *dt)
 {
 	int		nf;
@@ -62,6 +84,16 @@ static void	ft_read_process(t_pipex *dt)
 	}
 }
 
+/**
+ * @brief Writes and processes output commands.
+ *
+ * This function handles the output redirection,
+	splits the command into arguments,
+ * and attempts to execute it. If the command is not found, it searches for the
+ * command in the provided paths.
+ *
+ * @param dt A pointer to the t_pipex structure.
+ */
 static void	ft_writte_process(t_pipex *dt)
 {
 	int		nf;
@@ -87,6 +119,18 @@ static void	ft_writte_process(t_pipex *dt)
 	}
 }
 
+/**
+ * @brief Manages the waiting process and file descriptors.
+ *
+ * This function closes the write end of the pipe,
+	sets the input file descriptor
+ * to the read end of the pipe,
+	and handles the cleanup for here_doc if needed. It
+
+	* also increments the command index and checks if the last command should be executed.
+ *
+ * @param dt A pointer to the t_pipex structure.
+ */
 static void	ft_waiting_process(t_pipex *dt)
 {
 	close(dt->pfds[1]);
@@ -106,6 +150,17 @@ static void	ft_waiting_process(t_pipex *dt)
 	}
 }
 
+/**
+ * @brief Main function to handle the pipex process.
+ *
+
+	* This function sets up the pipes and forks processes to handle each command in the
+
+	* pipeline. It handles the synchronization of processes and manages the execution
+ * flow of the entire pipex process.
+ *
+ * @param dt A pointer to the t_pipex structure.
+ */
 void	ft_pipex(t_pipex *dt)
 {
 	pid_t	pid;
