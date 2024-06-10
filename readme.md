@@ -2,6 +2,17 @@
 
 This project is the discovery in detail and by programming  a ___UNIX___ mecanism that you already know.
 
+## Purpose
+
+This repository serves as a reference for the ___Pipex___ project from ___42 School___. The code and documentation provided here are intended to help you understand the concepts and implementation details of the project.
+
+## Important Notice
+
+Please do not copy and paste the code directly. The purpose of this repository is to help you learn and gain ideas on how to approach the project. To get the most out of this resource, try to understand the code and then implement it in your own way.
+
+## Usage
+
+Feel free to explore the code, read through the comments, and use it as a learning tool. Remember, the goal is to develop your own understanding and problem-solving skills.
 
 ### Pipex progam
 
