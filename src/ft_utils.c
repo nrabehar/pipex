@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:05:50 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/10 09:16:44 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:08:21 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ void	ft_free_pths(char **pths)
 	}
 	free(pths);
 }
-/**
- * @brief Retrieves the PATH environment variable and splits it into paths.
- * @param dt A pointer to the t_pipex structure.
- */
+
 void	ft_get_pths(t_pipex *dt)
 {
 	char	**epc;
@@ -60,12 +57,6 @@ void	ft_get_pths(t_pipex *dt)
 	}
 }
 
-/**
- * @brief Gets the full path of a command.
- * @param cmd The command name.
- * @param pths An array of paths.
- * @return The full path of the command, or NULL if not found.
- */
 char	*ft_get_cmd_pth(char *cmd, char **pths)
 {
 	char	*tmp;
@@ -91,10 +82,6 @@ char	*ft_get_cmd_pth(char *cmd, char **pths)
 	return (NULL);
 }
 
-/**
- * @brief Creates a here_doc file and writes input until a delimiter is reached.
- * @param delimiter The delimiter string.
- */
 void	ft_create_hd(char const *delimiter)
 {
 	int		fd;
@@ -105,12 +92,14 @@ void	ft_create_hd(char const *delimiter)
 		ft_throw("Here_doc", strerror(errno), "here_doc");
 	while (1)
 	{
-		ft_printf_fd(STDOUT_FILENO, "pipex heredoc> ");
+		write(STDOUT_FILENO, "heredoc>> ", 10);
 		line = ft_gnl(STDIN_FILENO);
 		if (!line || (line && ft_strncmp(line, delimiter,
 					ft_strlen(delimiter)) == 0))
 			break ;
-		ft_printf_fd(fd, line);
+		if (write(fd, line, ft_strlen(line)) < 0)
+			return (free(line), close(fd), ft_throw("Here_doc",
+					"Failed to write", "here_doc"));
 		free(line);
 	}
 	free(line);

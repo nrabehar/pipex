@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:59:12 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/06 09:45:47 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/15 12:07:43 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_pipex
 void		ft_throw(char const *title, char *m, char const *pt);
 void		ft_free_pths(char **pths);
 void		ft_get_pths(t_pipex *dt);
+void		ft_get_inpf(t_pipex *dt);
+void		ft_get_outf(t_pipex *dt);
 char		*ft_get_cmd_pth(char *cmd, char **pths);
 void		ft_pipex(t_pipex *dt);
 void		ft_create_hd(char const *delimiter);

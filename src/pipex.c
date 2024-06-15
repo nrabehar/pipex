@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:59:00 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/06 11:18:36 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:28:16 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,22 @@ static void	ft_pusage(void)
 		"./pipex <infile> cmd1 cmd2 <outfile>");
 }
 
-static void	ft_get_inpf(t_pipex *dt)
+void	ft_get_inpf(t_pipex *dt)
 {
+	int	derrn;
+
 	dt->inpf = open(dt->av[1], O_RDONLY, 0644);
 	if (dt->inpf < 0)
-		dt->errn = errno;
+	{
+		derrn = errno;
+		if (dt->inpf < 0 || close(dt->inpf) < 0)
+			ft_printf_fd(STDERR_FILENO, RED "Error%s: %s: %s\n", RESET,
+				strerror(derrn), dt->av[1]);
+		dt->errn = derrn;
+	}
 }
 
-static void	ft_get_outf(t_pipex *dt)
+void	ft_get_outf(t_pipex *dt)
 {
 	int	derrn;
 
@@ -33,20 +41,19 @@ static void	ft_get_outf(t_pipex *dt)
 	if (dt->outf < 0)
 	{
 		derrn = errno;
-		if (dt->inpf < 0 || close(dt->inpf) < 0)
+		if (close(dt->inpf) < 0)
 			ft_printf_fd(STDERR_FILENO, RED "Error%s: %s: %s\n", RESET,
-				strerror(dt->errn), dt->av[1]);
+				strerror(errno), dt->av[1]);
 		dt->errn = derrn;
 	}
 }
 
-static void	ft_get_mfds(char **av, char **ep, t_pipex *dt)
+static void	ft_init_dt(char **av, char **ep, t_pipex *dt)
 {
+	dt->is_hd = 0;
 	dt->errn = 0;
 	dt->av = av;
 	dt->ep = ep;
-	ft_get_inpf(dt);
-	ft_get_outf(dt);
 }
 
 int	main(int ac, char const *av[], char const *ep[])
@@ -62,7 +69,7 @@ int	main(int ac, char const *av[], char const *ep[])
 	}
 	dt.cmds = ac - 1;
 	dt.cmd_id = 2;
-	ft_get_mfds((char **)av, (char **)ep, &dt);
+	ft_init_dt((char **)av, (char **)ep, &dt);
 	ft_get_pths(&dt);
 	pid = fork();
 	if (pid < 0)
@@ -72,7 +79,5 @@ int	main(int ac, char const *av[], char const *ep[])
 	else
 		waitpid(pid, &status, 0);
 	ft_free_pths(dt.pths);
-	close(dt.inpf);
-	close(dt.outf);
 	return (WEXITSTATUS(status));
 }
