@@ -11,7 +11,9 @@ CTYPE_SRCS = ft_isalnum.c \
 	ft_isspace.c \
 	ft_isupper.c \
 	ft_islower.c \
-	ft_isblank.c
+	ft_isblank.c \
+	ft_iscloser.c \
+	ft_isopener.c
 
 LIST_DIR = list
 LIST_SRCS = ft_lstnew.c \
@@ -43,6 +45,7 @@ STR_SRCS = ft_substr.c \
 	ft_strjoin.c \
 	ft_strtrim.c \
 	ft_split.c \
+	ft_bct_split.c \
 	ft_itoa.c \
 	ft_ltoa.c \
 	ft_strmapi.c \
@@ -65,6 +68,9 @@ STR_SRCS = ft_substr.c \
 	ft_strnstr.c \
 	ft_strdup.c
 
+UTL_DIR = utils
+UTL_SRCS = ft_free_tab.c
+
 GNL_DIR = get_next_line
 GNL_SRCS = ft_gnl.c
 
@@ -77,8 +83,9 @@ LIST_OBJS = ${addprefix ${OBJS_DIR}/, ${LIST_SRCS:.c=.o}}
 STDLIB_OBJS = ${addprefix ${OBJS_DIR}/, ${STDLIB_SRCS:.c=.o}}
 STDIO_OBJS = ${addprefix ${OBJS_DIR}/, ${STDIO_SRCS:.c=.o}}
 STR_OBJS = ${addprefix ${OBJS_DIR}/, ${STR_SRCS:.c=.o}}
+UTL_OBJS = ${addprefix ${OBJS_DIR}/, ${UTL_SRCS:.c=.o}}
 GNL_OBJS = ${addprefix ${OBJS_DIR}/, ${GNL_SRCS:.c=.o}}
-OBJS = ${CTYPE_OBJS} ${LIST_OBJS} ${STDLIB_OBJS} ${STDIO_OBJS} ${STR_OBJS} ${GNL_OBJS}
+OBJS = ${CTYPE_OBJS} ${LIST_OBJS} ${STDLIB_OBJS} ${STDIO_OBJS} ${STR_OBJS} ${UTL_OBJS} ${GNL_OBJS}
 
 CC = gcc
 
@@ -126,6 +133,16 @@ ${OBJS_DIR}/%.o : ${STDIO_DIR}/%.c
 	@printf "\b\e[1;32m-\e[0m"
 
 ${OBJS_DIR}/%.o : ${STR_DIR}/%.c
+	@if [ -e $(OBJS_DIR) ]; then \
+		printf ""; \
+	else \
+		mkdir $(OBJS_DIR); \
+	fi
+	@printf "\b\e[1;32m/\e[0m"
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@printf "\b\e[1;32m-\e[0m"
+
+${OBJS_DIR}/%.o : ${UTL_DIR}/%.c
 	@if [ -e $(OBJS_DIR) ]; then \
 		printf ""; \
 	else \

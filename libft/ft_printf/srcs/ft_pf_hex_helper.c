@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:01:18 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/05/02 20:27:38 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:59:58 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*ft_pf_get_hex_content(unsigned int n, t_flags *flag)
 	if (flag->hash && n != 0)
 		size += 2;
 	ft_pf_adjust_hex_flag(n, flag, &size);
-	content = (char *)ft_calloc(size +1 ,sizeof(char));
+	content = (char *)ft_calloc(size + 1, sizeof(char));
 	if (!content)
 		return (NULL);
 	pf_fill_content(content, n, size, flag);

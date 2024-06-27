@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 12:36:44 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/05/14 15:32:43 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:46:02 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int					ft_isupper(int c);
 int					ft_islower(int c);
 int					ft_isblack(int c);
 int					ft_isspace(int c);
+int					ft_iscloser(int c, int op);
+int					ft_isopener(char c);
 size_t				ft_strlen(char const *s);
 void				*ft_memset(void *s, int c, size_t n);
 void				ft_bzero(void *s, size_t n);
@@ -76,6 +78,7 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
+char				**ft_bct_split(char *str);
 char				*ft_itoa(int n);
 char				*ft_ltoa(long n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -111,5 +114,6 @@ char				*ft_gnl(int fd);
 
 /* UTILS */
 size_t				ft_words_count(char const *str, char c);
+void				ft_free_tab(void **tab);
 
 #endif

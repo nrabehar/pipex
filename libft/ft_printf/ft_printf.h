@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:14:53 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/05/02 21:21:18 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:59:29 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,19 @@ int			ft_printf(char const *format, ...);
 int			ft_printf_fd(int fd, char const *format, ...);
 void		ft_pf_parse_value(va_list args, char const *format, char **content);
 /* Printer */
-void			ft_pf_putc(va_list args, t_flags *flag, t_storage *st,
+void		ft_pf_putc(va_list args, t_flags *flag, t_storage *st,
 				char **content);
-void			ft_pf_puthex(va_list args, t_flags *flag, t_storage *st,
+void		ft_pf_puthex(va_list args, t_flags *flag, t_storage *st,
 				char **content);
-void			ft_pf_putptr(va_list args, t_flags *flag, t_storage *st,
+void		ft_pf_putptr(va_list args, t_flags *flag, t_storage *st,
 				char **content);
-void			ft_pf_putn(va_list args, t_flags *flag, t_storage *st,
+void		ft_pf_putn(va_list args, t_flags *flag, t_storage *st,
 				char **content);
-void			ft_pf_putu(va_list args, t_flags *flag, t_storage *st,
+void		ft_pf_putu(va_list args, t_flags *flag, t_storage *st,
 				char **content);
-void			ft_pf_puts(va_list args, t_flags *flag, t_storage *st,
+void		ft_pf_puts(va_list args, t_flags *flag, t_storage *st,
 				char **content);
-void			ft_pf_putzu(va_list args, t_flags *flag, t_storage *st,
+void		ft_pf_putzu(va_list args, t_flags *flag, t_storage *st,
 				char **content);
 /* Flags */
 int			ft_pf_is_format(int c);

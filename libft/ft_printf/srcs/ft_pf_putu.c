@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:08:56 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/05/02 20:32:07 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:59:43 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static int	ft_pf_putu_base(t_flags *flag, t_storage *st, char **content)
 	return (length);
 }
 
-static int	ft_pf_print_u(unsigned int num, t_flags *flag, t_storage *st, char **content)
+static int	ft_pf_print_u(unsigned int num, t_flags *flag, t_storage *st,
+		char **content)
 {
 	int	length;
 

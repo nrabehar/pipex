@@ -6,7 +6,7 @@
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:05:50 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/06 09:08:21 by nrabehar         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:29:25 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,74 +35,41 @@ void	ft_free_pths(char **pths)
 	free(pths);
 }
 
-void	ft_get_pths(t_pipex *dt)
+void	ft_get_inpf(t_pipex *dt)
 {
-	char	**epc;
-
-	epc = dt->ep;
-	while (*epc && !ft_strnstr(*epc, "PATH=", 5))
-		epc++;
-	if (!*epc)
+	if (dt->is_hd)
+		ft_create_hd(dt->av[2]);
+	dt->inpf = open(dt->av[1], O_RDONLY, 0644);
+	if (dt->inpf < 0)
 	{
-		close(dt->inpf);
-		close(dt->inpf);
-		ft_throw("Path", "Failed to get evironement path", NULL);
-	}
-	dt->pths = ft_split(*epc + 5, ':');
-	if (!dt->pths)
-	{
-		close(dt->inpf);
-		close(dt->inpf);
-		ft_throw("Path", "Failed to get evironement path", NULL);
+		dt->errn = errno;
+		if (dt->inpf < 0 || close(dt->inpf) < 0)
+			ft_printf_fd(STDERR_FILENO, RED "Error%s: %s: %s\n", RESET,
+				strerror(dt->errn), dt->av[1]);
 	}
 }
 
-char	*ft_get_cmd_pth(char *cmd, char **pths)
+void	ft_get_outf(t_pipex *dt)
 {
-	char	*tmp;
-	int		i;
-	char	*pth;
+	int	derrn;
 
-	if (!cmd)
-		return (NULL);
-	i = -1;
-	while (pths[++i])
+	if (dt->is_hd)
+		dt->outf = open(dt->av[dt->cmds], O_RDWR | O_CREAT | O_APPEND, 0644);
+	else
+		dt->outf = open(dt->av[dt->cmds], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (dt->outf < 0)
 	{
-		tmp = ft_strjoin(pths[i], "/");
-		if (!tmp)
-			return (NULL);
-		pth = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (!pth)
-			return (NULL);
-		if (access(pth, F_OK | X_OK) == 0)
-			return (pth);
-		free(pth);
+		derrn = errno;
+		if (close(dt->inpf) < 0)
+			ft_printf_fd(STDERR_FILENO, RED "Error%s: %s: %s\n", RESET,
+				strerror(errno), dt->av[1]);
+		dt->errn = derrn;
 	}
-	return (NULL);
 }
 
-void	ft_create_hd(char const *delimiter)
+void	ft_closes_std(void)
 {
-	int		fd;
-	char	*line;
-
-	fd = open("here_doc", O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-		ft_throw("Here_doc", strerror(errno), "here_doc");
-	while (1)
-	{
-		write(STDOUT_FILENO, "heredoc>> ", 10);
-		line = ft_gnl(STDIN_FILENO);
-		if (!line || (line && ft_strncmp(line, delimiter,
-					ft_strlen(delimiter)) == 0))
-			break ;
-		if (write(fd, line, ft_strlen(line)) < 0)
-			return (free(line), close(fd), ft_throw("Here_doc",
-					"Failed to write", "here_doc"));
-		free(line);
-	}
-	free(line);
-	if (close(fd) < 0)
-		ft_throw("Here_doc", strerror(errno), "here_doc");
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 }

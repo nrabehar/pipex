@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isblank.c                                       :+:      :+:    :+:   */
+/*   ft_iscloser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 17:39:47 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/01 14:59:04 by nrabehar         ###   ########.fr       */
+/*   Created: 2024/06/18 15:33:47 by nrabehar          #+#    #+#             */
+/*   Updated: 2024/06/18 16:20:14 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_isblack(int c)
+int	ft_iscloser(int c, int op)
 {
-	if (c == 32 || c == 9)
-		return (1);
-	return (0);
+	if (op == '{')
+		return ('}' == c);
+	if (op == '\'')
+		return (op == c);
+	if (op == '"')
+		return (op == c);
+	if (op == '(')
+		return (')' == c);
+	if (op == '<')
+		return ('>' == c);
+	return (-1);
 }

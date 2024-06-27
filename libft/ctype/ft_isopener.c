@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isblank.c                                       :+:      :+:    :+:   */
+/*   ft_isopener.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 17:39:47 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/01 14:59:04 by nrabehar         ###   ########.fr       */
+/*   Created: 2024/06/18 15:34:19 by nrabehar          #+#    #+#             */
+/*   Updated: 2024/06/18 16:19:51 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_isblack(int c)
+int	ft_isopener(char c)
 {
-	if (c == 32 || c == 9)
-		return (1);
-	return (0);
+	char	*openers;
+
+	openers = "'\"({<";
+	while (*openers && *openers != c)
+		openers++;
+	return (*openers == c);
 }

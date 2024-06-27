@@ -4,9 +4,9 @@ OBJS_DIR  = obj
 SRCS_DIR  = src
 INCS_DIR  = inc
 
-# build
+# builds
 NAME = pipex
-BNAME = .pipex_bonus
+BNAME = pipex_bonus
 LIBPIPEX = libpipex.a
 LIBFT = $(LIBFT_DIR)/libft.a
 
@@ -18,7 +18,8 @@ OUTFILE :=
 
 # files
 SRCS_FILES = ft_utils.c \
-					ft_process.c
+					ft_process.c \
+					ft_parser.c
 
 # objects
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
@@ -38,12 +39,9 @@ $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 
 $(NAME) : $(PM_OBJ) $(LIBPIPEX)
 	$(CC) $(CFLAGS) $(OBJS) $(PM_OBJ) -o $(NAME) -L. -lpipex $(CLINKS)
-	rm -f $(BNAME)
 
 $(BNAME) : $(PB_OBJ) $(LIBPIPEX)
-	$(CC) $(CFLAGS) $(OBJS) $(PB_OBJ) -o $(NAME) -L. -lpipex $(CLINKS)
-	touch $(BNAME)
-	rm -f $(PM_OBJ)
+	$(CC) $(CFLAGS) $(OBJS) $(PB_OBJ) -o $(BNAME) -L. -lpipex $(CLINKS)
 
 $(LIBPIPEX) : $(LIBFT) $(OBJS)
 	@ar -rcs $(LIBPIPEX) $(OBJS)

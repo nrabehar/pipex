@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isblank.c                                       :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrabehar <nrabehar@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 17:39:47 by nrabehar          #+#    #+#             */
-/*   Updated: 2024/06/01 14:59:04 by nrabehar         ###   ########.fr       */
+/*   Created: 2024/06/18 15:38:00 by nrabehar          #+#    #+#             */
+/*   Updated: 2024/06/18 15:45:45 by nrabehar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_isblack(int c)
+void	ft_free_tab(void **tab)
 {
-	if (c == 32 || c == 9)
-		return (1);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (((unsigned char **)tab)[i])
+		free(((unsigned char **)tab)[i]);
+	free(tab);
 }
